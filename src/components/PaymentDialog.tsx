@@ -34,17 +34,22 @@ const PaymentDialog = ({ open, onOpenChange, schedule, onSaved }: PaymentDialogP
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    amount: string;
+    payment_date: string;
+    payment_method: 'efectivo' | 'transferencia' | 'tarjeta';
+    notes: string;
+  }>({
     amount: '',
     payment_date: format(new Date(), 'yyyy-MM-dd'),
-    payment_method: 'efectivo' as const,
+    payment_method: 'efectivo',
     notes: '',
   });
 
   useEffect(() => {
     if (schedule) {
       setFormData({
-        amount: schedule.amount,
+        amount: schedule.amount.toString(),
         payment_date: format(new Date(), 'yyyy-MM-dd'),
         payment_method: 'efectivo',
         notes: '',
@@ -71,7 +76,7 @@ const PaymentDialog = ({ open, onOpenChange, schedule, onSaved }: PaymentDialogP
         user_id: user.id,
         loan_id: schedule.loan_id,
         customer_id: schedule.loan.customer_id,
-        amount: parsed.amount.toString(),
+        amount: parsed.amount,
         payment_date: parsed.payment_date,
         payment_method: parsed.payment_method,
         installment_number: schedule.installment_number,
@@ -89,7 +94,7 @@ const PaymentDialog = ({ open, onOpenChange, schedule, onSaved }: PaymentDialogP
         .from('payment_schedule')
         .update({
           status: 'pagado',
-          paid_amount: parsed.amount.toString(),
+          paid_amount: parsed.amount,
           paid_date: parsed.payment_date,
         })
         .eq('id', schedule.id);
@@ -189,8 +194,8 @@ const PaymentDialog = ({ open, onOpenChange, schedule, onSaved }: PaymentDialogP
             <Label htmlFor="payment_method">Método de pago *</Label>
             <Select
               value={formData.payment_method}
-              onValueChange={(value) =>
-                setFormData({ ...formData, payment_method: value as 'efectivo' | 'transferencia' | 'tarjeta' })
+              onValueChange={(value: 'efectivo' | 'transferencia' | 'tarjeta') =>
+                setFormData({ ...formData, payment_method: value })
               }
             >
               <SelectTrigger>

@@ -36,13 +36,21 @@ const LoanDialog = ({ open, onOpenChange, loan, onSaved }: LoanDialogProps) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [customers, setCustomers] = useState<Customer[]>([]);
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    customer_id: string;
+    amount: string;
+    interest_rate: string;
+    installments: string;
+    start_date: string;
+    status: 'activo' | 'cancelado' | 'moroso';
+    notes: string;
+  }>({
     customer_id: '',
     amount: '',
     interest_rate: '',
     installments: '',
     start_date: format(new Date(), 'yyyy-MM-dd'),
-    status: 'activo' as const,
+    status: 'activo',
     notes: '',
   });
 
@@ -137,11 +145,11 @@ const LoanDialog = ({ open, onOpenChange, loan, onSaved }: LoanDialogProps) => {
       const loanData: LoanInsert = {
         user_id: user.id,
         customer_id: parsed.customer_id,
-        amount: parsed.amount.toString(),
-        interest_rate: parsed.interest_rate.toString(),
+        amount: parsed.amount,
+        interest_rate: parsed.interest_rate,
         installments: parsed.installments,
-        installment_amount: calculation.installmentAmount.toString(),
-        total_amount: calculation.totalAmount.toString(),
+        installment_amount: calculation.installmentAmount,
+        total_amount: calculation.totalAmount,
         start_date: parsed.start_date,
         status: parsed.status,
         notes: parsed.notes,
@@ -178,7 +186,7 @@ const LoanDialog = ({ open, onOpenChange, loan, onSaved }: LoanDialogProps) => {
             loan_id: newLoan.id,
             installment_number: i,
             due_date: format(dueDate, 'yyyy-MM-dd'),
-            amount: calculation.installmentAmount.toString(),
+            amount: calculation.installmentAmount,
             status: 'pendiente',
           });
         }
@@ -350,8 +358,8 @@ const LoanDialog = ({ open, onOpenChange, loan, onSaved }: LoanDialogProps) => {
               <Label htmlFor="status">Estado</Label>
               <Select
                 value={formData.status}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, status: value as 'activo' | 'cancelado' | 'moroso' })
+                onValueChange={(value: 'activo' | 'cancelado' | 'moroso') =>
+                  setFormData({ ...formData, status: value })
                 }
               >
                 <SelectTrigger>

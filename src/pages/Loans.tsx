@@ -13,8 +13,8 @@ import LoanDialog from '@/components/LoanDialog';
 
 const Loans = () => {
   const { user } = useAuth();
-  const [loans, setLoans] = useState<(Loan & { customer: Customer })[]>([]);
-  const [filteredLoans, setFilteredLoans] = useState<(Loan & { customer: Customer })[]>([]);
+  const [loans, setLoans] = useState<any[]>([]);
+  const [filteredLoans, setFilteredLoans] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
