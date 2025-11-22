@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
-import { PaymentSchedule, Loan, Customer, PaymentInsert } from '@/types/database';
+import { PaymentInsert, PaymentDialogProps, ScheduleWithDetails, PaymentFormData } from '@/types';
 import { z } from 'zod';
 import { format } from 'date-fns';
 
@@ -19,27 +19,11 @@ const paymentSchema = z.object({
   notes: z.string().optional(),
 });
 
-type ScheduleWithDetails = PaymentSchedule & {
-  loan: Loan & { customer: Customer };
-};
-
-interface PaymentDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  schedule?: ScheduleWithDetails;
-  onSaved: () => void;
-}
-
 const PaymentDialog = ({ open, onOpenChange, schedule, onSaved }: PaymentDialogProps) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   
-  const [formData, setFormData] = useState<{
-    amount: string;
-    payment_date: string;
-    payment_method: 'efectivo' | 'transferencia' | 'tarjeta';
-    notes: string;
-  }>({
+  const [formData, setFormData] = useState<PaymentFormData>({
     amount: '',
     payment_date: format(new Date(), 'yyyy-MM-dd'),
     payment_method: 'efectivo',

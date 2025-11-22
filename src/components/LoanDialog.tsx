@@ -9,7 +9,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
-import { Loan, Customer, LoanInsert, PaymentScheduleInsert } from '@/types/database';
+import { Loan, Customer, LoanInsert, PaymentScheduleInsert, LoanDialogProps, LoanFormData, LoanCalculation } from '@/types';
 import { z } from 'zod';
 import { addMonths, format } from 'date-fns';
 
@@ -23,28 +23,13 @@ const loanSchema = z.object({
   notes: z.string().optional(),
 });
 
-interface LoanDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  loan?: Loan;
-  onSaved: () => void;
-}
-
 const LoanDialog = ({ open, onOpenChange, loan, onSaved }: LoanDialogProps) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [customers, setCustomers] = useState<Customer[]>([]);
   
-  const [formData, setFormData] = useState<{
-    customer_id: string;
-    amount: string;
-    interest_rate: string;
-    installments: string;
-    start_date: string;
-    status: 'activo' | 'cancelado' | 'moroso';
-    notes: string;
-  }>({
+  const [formData, setFormData] = useState<LoanFormData>({
     customer_id: '',
     amount: '',
     interest_rate: '',
@@ -105,7 +90,7 @@ const LoanDialog = ({ open, onOpenChange, loan, onSaved }: LoanDialogProps) => {
     }
   };
 
-  const calculateLoan = () => {
+  const calculateLoan = (): LoanCalculation | null => {
     const amount = parseFloat(formData.amount);
     const interestRate = parseFloat(formData.interest_rate);
     const installments = parseInt(formData.installments);

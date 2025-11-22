@@ -7,13 +7,9 @@ import { Calendar, AlertCircle, CheckCircle2, Clock } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
-import { PaymentSchedule, Loan, Customer } from '@/types/database';
+import { ScheduleWithDetails } from '@/types';
 import PaymentDialog from '@/components/PaymentDialog';
 import { differenceInDays, parseISO } from 'date-fns';
-
-type ScheduleWithDetails = PaymentSchedule & {
-  loan: Loan & { customer: Customer };
-};
 
 const Collections = () => {
   const { user } = useAuth();

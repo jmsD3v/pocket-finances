@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Customer, CustomerStatus } from '@/types/database';
+import { Customer, CustomerStatus, CustomerDialogProps, CustomerFormData } from '@/types';
 import {
   Dialog,
   DialogContent,
@@ -45,26 +45,11 @@ const customerSchema = z.object({
   notes: z.string().trim().max(1000).optional().or(z.literal('')),
 });
 
-interface CustomerDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  customer?: Customer;
-  onSaved: () => void;
-}
-
 const CustomerDialog = ({ open, onOpenChange, customer, onSaved }: CustomerDialogProps) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [formData, setFormData] = useState<{
-    full_name: string;
-    email: string;
-    phone: string;
-    address: string;
-    identification_number: string;
-    status: string;
-    notes: string;
-  }>({
+  const [formData, setFormData] = useState<CustomerFormData>({
     full_name: '',
     email: '',
     phone: '',
