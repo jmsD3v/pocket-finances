@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import Customers from "./pages/Customers";
 import Sales from "./pages/Sales";
 import Loans from "./pages/Loans";
+import Collections from "./pages/Collections";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -60,6 +61,16 @@ const App = () => (
                 <ProtectedRoute>
                   <MainLayout>
                     <Loans />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/collections"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <Collections />
                   </MainLayout>
                 </ProtectedRoute>
               }

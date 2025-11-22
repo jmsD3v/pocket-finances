@@ -1,13 +1,13 @@
 import { NavLink } from '@/components/NavLink';
-import { Home, Users, TrendingUp, DollarSign } from 'lucide-react';
+import { Home, Users, TrendingUp, DollarSign, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const BottomNav = () => {
   const navItems = [
     { to: '/', icon: Home, label: 'Inicio' },
     { to: '/customers', icon: Users, label: 'Clientes' },
-    { to: '/sales', icon: TrendingUp, label: 'Ventas' },
     { to: '/loans', icon: DollarSign, label: 'Préstamos' },
+    { to: '/collections', icon: Wallet, label: 'Cobranzas' },
   ];
 
   return (
