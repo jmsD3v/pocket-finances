@@ -1,17 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { UserRole } from '@/types/database';
-
-interface AuthContextType {
-  user: User | null;
-  session: Session | null;
-  userRoles: UserRole[];
-  loading: boolean;
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signOut: () => Promise<void>;
-}
+import { AuthContextType, UserRole } from '@/types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

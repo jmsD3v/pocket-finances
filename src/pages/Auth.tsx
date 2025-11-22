@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { Loader2, Wallet } from 'lucide-react';
 import { z } from 'zod';
+import { SignUpFormData, SignInFormData } from '@/types';
 
 const signUpSchema = z.object({
   fullName: z.string().trim().min(2, 'El nombre debe tener al menos 2 caracteres').max(100),
@@ -25,8 +26,8 @@ const Auth = () => {
   const navigate = useNavigate();
   const { signUp, signIn, user } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [signUpData, setSignUpData] = useState({ fullName: '', email: '', password: '' });
-  const [signInData, setSignInData] = useState({ email: '', password: '' });
+  const [signUpData, setSignUpData] = useState<SignUpFormData>({ fullName: '', email: '', password: '' });
+  const [signInData, setSignInData] = useState<SignInFormData>({ email: '', password: '' });
 
   // Redirect if already logged in
   if (user) {

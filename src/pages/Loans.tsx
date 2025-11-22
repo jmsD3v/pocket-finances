@@ -8,7 +8,7 @@ import { Plus, DollarSign, Calendar, TrendingUp, Search } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
-import { Loan, Customer } from '@/types/database';
+import { Loan } from '@/types';
 import LoanDialog from '@/components/LoanDialog';
 
 const Loans = () => {
