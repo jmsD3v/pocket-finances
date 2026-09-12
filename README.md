@@ -1,73 +1,28 @@
-# Welcome to your Lovable project
+# Gestión Financiera
 
-## Project info
+Sistema de gestión de ventas, préstamos y cobranzas pensado para pequeños comercios, prestamistas y cooperativas.
 
-**URL**: https://lovable.dev/projects/3535b20f-144f-4d89-b05d-b63bba04474f
+## Qué hace
 
-## How can I edit this code?
+- **Clientes** — alta y seguimiento de clientes.
+- **Préstamos** — carga de préstamos con plan de pagos (`payment_schedule`).
+- **Cobranzas** — registro de pagos contra ese plan.
+- **Ventas** — módulo de ventas independiente del flujo de préstamos.
+- **Dashboard** — vista consolidada de la operación.
+- **Auth** — login con roles (`profiles` + `user_roles`).
 
-There are several ways of editing your application.
+## Stack
 
-**Use Lovable**
+React 18 + TypeScript + Vite, shadcn/ui sobre Radix, Tailwind, React Router, React Query, React Hook Form + Zod, Supabase (Postgres + Auth) como backend.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3535b20f-144f-4d89-b05d-b63bba04474f) and start prompting.
+## Estado actual
 
-Changes made via Lovable will be committed automatically to this repo.
+Prototipo funcional armado sobre Supabase, con el esquema de base ya modelado (`profiles`, `user_roles`, `customers`, `loans`, `payments`, `payment_schedule`). **La instancia de Supabase original no está conectada** — para levantarlo hay que crear un proyecto nuevo, correr las migraciones de `supabase/migrations/` y completar `.env` a partir de `.env.example`.
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Desarrollo local
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
+cp .env.example .env   # completar con las credenciales del proyecto Supabase
 npm run dev
 ```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/3535b20f-144f-4d89-b05d-b63bba04474f) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
